@@ -3,12 +3,10 @@ import {
     IsDefined,
     IsEmail,
     IsNotEmpty,
-    IsObject,
     IsOptional,
     IsString,
     IsUUID,
 } from 'class-validator';
-import { LocationDto } from '../../../common/dtos/location.dto';
 
 export class PassengerDto {
     @IsUUID()
@@ -31,11 +29,6 @@ export class PassengerDto {
     @IsDefined()
     @IsNotEmpty()
     phoneNumber: string;
-
-    @IsObject()
-    @IsNotEmpty()
-    @IsDefined()
-    location: LocationDto;
 
     @IsOptional()
     @IsDate()

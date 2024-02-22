@@ -7,12 +7,12 @@ import {
 
 export class LocationDto {
     @IsLatitude()
-    @IsNotEmpty()
     @IsDefined()
+    @IsNotEmpty()
     latitude: number;
 
     @IsLongitude()
-    @IsNotEmpty()
     @IsDefined()
+    @IsNotEmpty()
     longitude: number;
 }

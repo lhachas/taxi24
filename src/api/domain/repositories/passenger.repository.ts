@@ -1,7 +1,7 @@
 import { Passenger } from '../models/passenger.model';
 
-export interface IPassengerRepository {
-    findAll(): Promise<Passenger[]>;
-    findById(id: string): Promise<Passenger>;
-    save(passenger: Passenger): Promise<Passenger>;
+export abstract class PassengerRepository {
+    public abstract findAll(): Promise<Passenger[]>;
+    public abstract findById(id: string): Promise<Passenger>;
+    public abstract save(passenger: Passenger): Promise<Passenger>;
 }

@@ -1,7 +1,7 @@
 import { Trip } from '../models/trip.model';
 
-export interface ITripRepository {
-    save(trip: Trip): Promise<Trip>;
-    findById(id: string): Promise<Trip>;
-    findAllActive(): Promise<Trip[]>;
+export abstract class TripRepository {
+    public abstract save(trip: Trip): Promise<Trip>;
+    public abstract findById(id: string): Promise<Trip>;
+    public abstract findAllActive(): Promise<Trip[]>;
 }

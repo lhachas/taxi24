@@ -1,11 +1,12 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Trip } from './trip.model';
 
 export abstract class Passenger {
-    id: string;
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    trips?: Trip[];
+    @ApiProperty() id?: string;
+    @ApiProperty() fullName: string;
+    @ApiProperty() email: string;
+    @ApiProperty() phoneNumber: string;
+    @ApiProperty() createdAt?: Date;
+    @ApiProperty() updatedAt?: Date;
+    @ApiProperty() trips?: Trip[];
 }

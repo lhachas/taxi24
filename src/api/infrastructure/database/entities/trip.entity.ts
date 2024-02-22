@@ -6,27 +6,29 @@ import {
     JoinColumn,
     CreateDateColumn,
     UpdateDateColumn,
+    OneToOne,
 } from 'typeorm';
-import { Driver } from './driver.entity';
-import { Passenger } from './passenger.entity';
-import { TripStatus } from '../../../common/enums/trip-status.enum';
+import { DriverEntity } from './driver.entity';
+import { PassengerEntity } from './passenger.entity';
+import { InvoiceEntity } from './invoice.entity';
+import { TripStatus } from '../../../../shared/enums/trip-status.enum';
 
 @Entity({ name: 'trips' })
-export class Trip {
+export class TripEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => Driver, (driver) => driver.trips)
+    @ManyToOne(() => DriverEntity, (driver) => driver.trips)
     @JoinColumn({
         name: 'driver_id',
     })
-    driver: Driver;
+    driver: DriverEntity;
 
-    @ManyToOne(() => Passenger, (passenger) => passenger.trips)
+    @ManyToOne(() => PassengerEntity, (passenger) => passenger.trips)
     @JoinColumn({
         name: 'passenger_id',
     })
-    passenger: Passenger;
+    passenger: PassengerEntity;
 
     @Column({
         nullable: false,
@@ -81,4 +83,9 @@ export class Trip {
         name: 'updated_at',
     })
     updatedAt?: Date;
+
+    @OneToOne(() => InvoiceEntity, (invoice) => invoice.trip, {
+        cascade: true,
+    })
+    invoice?: InvoiceEntity;
 }

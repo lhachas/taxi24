@@ -1,10 +1,10 @@
-import { Location } from '../../../common/model/location.model';
 import { Driver } from '../models/driver.model';
+import { Location } from '../models/location.model';
 
-export interface IDriverRepository {
-    findAll(): Promise<Driver[]>;
-    findById(id: string): Promise<Driver>;
-    findAvailables(): Promise<Driver[]>;
-    findNearest(location: Location): Promise<Driver[]>;
-    save(driver: Driver): Promise<Driver>;
+export abstract class DriverRepository {
+    public abstract findAll(): Promise<Driver[]>;
+    public abstract findById(id: string): Promise<Driver>;
+    public abstract findAvailables(): Promise<Driver[]>;
+    public abstract findNearest(location: Location): Promise<Driver[]>;
+    public abstract save(driver: Driver): Promise<Driver>;
 }

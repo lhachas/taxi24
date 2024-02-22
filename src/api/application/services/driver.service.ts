@@ -1,16 +1,16 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { LocationUtil } from '../../../common/utils/location.util';
-import { IDriverRepository } from '../../domain/repositories/driver.repository';
+import { LocationUtil } from '../../../shared/utils/location.util';
+import { DriverRepository } from '../../domain/repositories/driver.repository';
 import { Driver } from '../../domain/models/driver.model';
-import { Location } from '../../../common/model/location.model';
 import { DriverCaseUse } from '../case-uses/driver.caseuse';
+import { Location } from '../../domain/models/location.model';
 
 @Injectable()
 export class DriverService implements DriverCaseUse {
     constructor(
-        @Inject('DRIVER_REPOSITORY')
-        private readonly driverRepository: IDriverRepository,
+        @Inject(DriverRepository)
+        private readonly driverRepository: DriverRepository,
         private readonly configService: ConfigService,
     ) {}
 

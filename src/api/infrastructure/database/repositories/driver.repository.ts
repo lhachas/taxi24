@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { plainToClass } from 'class-transformer';
-import { Driver } from '../entities/driver.entity';
-import { IDriverRepository } from '../../domain/repositories/driver.repository';
-import { Location } from '../../../common/model/location.model';
+import { DriverEntity } from '../entities/driver.entity';
+import { Driver } from '../../../domain/models/driver.model';
+import { DriverRepository } from '../../../domain/repositories/driver.repository';
+import { Location } from '../../../domain/models/location.model';
 
 @Injectable()
-export class DriverRepository implements IDriverRepository {
+export class DriverDBRepository implements DriverRepository {
     constructor(
-        @InjectRepository(Driver)
-        private readonly driverRepository: Repository<Driver>,
+        @InjectRepository(DriverEntity)
+        private readonly driverRepository: Repository<DriverEntity>,
     ) {}
 
     public findAll(): Promise<Driver[]> {
@@ -42,6 +43,6 @@ export class DriverRepository implements IDriverRepository {
     }
 
     public save(driver: Driver): Promise<Driver> {
-        return this.driverRepository.save(plainToClass(Driver, driver));
+        return this.driverRepository.save(plainToClass(DriverEntity, driver));
     }
 }

@@ -7,7 +7,7 @@ import {
     IsString,
     IsUUID,
 } from 'class-validator';
-import { TripStatus } from '../../../common/enums/trip-status.enum';
+import { TripStatus } from '../../../../../shared/enums/trip-status.enum';
 
 export class TripDto {
     @IsUUID()

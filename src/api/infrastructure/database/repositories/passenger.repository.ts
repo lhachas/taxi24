@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { plainToClass } from 'class-transformer';
-import { IPassengerRepository } from '../../domain/repositories/passenger.repository';
-import { Passenger } from '../entities/passenger.entity';
+import { PassengerEntity } from '../entities/passenger.entity';
+import { PassengerRepository } from '../../../domain/repositories/passenger.repository';
+import { Passenger } from '../../../domain/models/passenger.model';
 
 @Injectable()
-export class PassengerRepository implements IPassengerRepository {
+export class PassengerDBRepository implements PassengerRepository {
     constructor(
-        @InjectRepository(Passenger)
-        private readonly passengerRepository: Repository<Passenger>,
+        @InjectRepository(PassengerEntity)
+        private readonly passengerRepository: Repository<PassengerEntity>,
     ) {}
 
     public findAll(): Promise<Passenger[]> {
@@ -22,7 +23,7 @@ export class PassengerRepository implements IPassengerRepository {
 
     public save(passenger: Passenger): Promise<Passenger> {
         return this.passengerRepository.save(
-            plainToClass(Passenger, passenger),
+            plainToClass(PassengerEntity, passenger),
         );
     }
 }

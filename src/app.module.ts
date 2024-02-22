@@ -1,15 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { DriverController } from './api/infrastructure/controllers/driver.controller';
-import { DriverRepository } from './api/infrastructure/repositories/driver.repository';
-import { DriverService } from './api/application/services/driver.service';
 import { DatabaseModule } from './api/infrastructure/database/database.module';
-import { PassengerController } from './api/infrastructure/controllers/passenger.controller';
-import { PassengerRepository } from './api/infrastructure/repositories/passenger.repository';
+import { DriverController } from './api/infrastructure/rest/controllers/driver.controller';
+import { PassengerController } from './api/infrastructure/rest/controllers/passenger.controller';
+import { TripController } from './api/infrastructure/rest/controllers/trip.controller';
+import { InvoiceController } from './api/infrastructure/rest/controllers/invoice.controller';
+import { DriverService } from './api/application/services/driver.service';
 import { PassengerService } from './api/application/services/passenger.service';
-import { TripController } from './api/infrastructure/controllers/trip.controller';
-import { TripRepository } from './api/infrastructure/repositories/trip.repository';
 import { TripService } from './api/application/services/trip.service';
+import { DriverCaseUse } from './api/application/case-uses/driver.caseuse';
+import { PassengerCaseUse } from './api/application/case-uses/passenger.caseuse';
+import { TripCaseUse } from './api/application/case-uses/trip.caseuse';
+import { InvoiceCaseUse } from './api/application/case-uses/invoice.caseuse';
+import { InvoiceService } from './api/application/services/invoice.service';
 
 @Module({
     imports: [
@@ -19,31 +22,28 @@ import { TripService } from './api/application/services/trip.service';
         }),
         DatabaseModule,
     ],
-    controllers: [DriverController, PassengerController, TripController],
+    controllers: [
+        DriverController,
+        PassengerController,
+        TripController,
+        InvoiceController,
+    ],
     providers: [
         {
-            provide: 'DRIVER_REPOSITORY',
-            useClass: DriverRepository,
-        },
-        {
-            provide: 'DRIVER_CASE_USE',
+            provide: DriverCaseUse,
             useClass: DriverService,
         },
         {
-            provide: 'PASSENGER_REPOSITORY',
-            useClass: PassengerRepository,
-        },
-        {
-            provide: 'PASSENGER_CASE_USE',
+            provide: PassengerCaseUse,
             useClass: PassengerService,
         },
         {
-            provide: 'TRIP_REPOSITORY',
-            useClass: TripRepository,
+            provide: TripCaseUse,
+            useClass: TripService,
         },
         {
-            provide: 'TRIP_CASE_USE',
-            useClass: TripService,
+            provide: InvoiceCaseUse,
+            useClass: InvoiceService,
         },
     ],
 })

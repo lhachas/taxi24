@@ -1,14 +1,15 @@
-import { PaymentMethod } from '../../../common/enums/payment-method.enum';
-import { PaymentStatus } from '../../../common/enums/payment-status.enum';
+import { ApiProperty } from '@nestjs/swagger';
+import { PaymentMethod } from '../../../shared/enums/payment-method.enum';
+import { PaymentStatus } from '../../../shared/enums/payment-status.enum';
 import { Trip } from './trip.model';
 
 export class Invoice {
-    id: string;
-    trip: Trip;
-    totalAmount: number;
-    paymentMethod: PaymentMethod;
-    paymentStatus: PaymentStatus;
-    issued_at: Date;
-    createdAt?: Date;
-    updatedAt?: Date;
+    @ApiProperty() id?: string;
+    @ApiProperty() trip: Trip;
+    @ApiProperty() totalAmount: number;
+    @ApiProperty() paymentMethod: PaymentMethod;
+    @ApiProperty() paymentStatus: PaymentStatus;
+    @ApiProperty() issuedAt: Date;
+    @ApiProperty() createdAt?: Date;
+    @ApiProperty() updatedAt?: Date;
 }

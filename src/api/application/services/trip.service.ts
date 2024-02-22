@@ -1,30 +1,52 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { TripCaseUse } from '../case-uses/trip.caseuse';
 import { Trip } from '../../domain/models/trip.model';
-import { ITripRepository } from '../../domain/repositories/trip.repository';
-import { TripStatus } from '../../../common/enums/trip-status.enum';
-import { IDriverRepository } from '../../domain/repositories/driver.repository';
-import { IPassengerRepository } from '../../domain/repositories/passenger.repository';
+import { TripStatus } from '../../../shared/enums/trip-status.enum';
+import { DriverRepository } from '../../domain/repositories/driver.repository';
+import { PassengerRepository } from '../../domain/repositories/passenger.repository';
+import { TripRepository } from '../../domain/repositories/trip.repository';
+import { InvoiceRepository } from '../../domain/repositories/invoice.repository';
+import { PaymentMethod } from '../../../shared/enums/payment-method.enum';
+import { PaymentStatus } from '../../../shared/enums/payment-status.enum';
 
 @Injectable()
 export class TripService implements TripCaseUse {
     constructor(
-        @Inject('TRIP_REPOSITORY')
-        private readonly tripRepository: ITripRepository,
-        @Inject('DRIVER_REPOSITORY')
-        private readonly driverRepository: IDriverRepository,
-        @Inject('PASSENGER_REPOSITORY')
-        private readonly passengerRepository: IPassengerRepository,
+        @Inject(DriverRepository)
+        private readonly driverRepository: DriverRepository,
+        @Inject(PassengerRepository)
+        private readonly passengerRepository: PassengerRepository,
+        @Inject(TripRepository)
+        private readonly tripRepository: TripRepository,
+        @Inject(InvoiceRepository)
+        private readonly invoiceRepository: InvoiceRepository,
     ) {}
 
-    public async create(payload: any): Promise<Trip> {
-        const { driverId, passengerId, ...location } = payload;
+    public async create(
+        driverId: string,
+        passengerId: string,
+        originLatitude: number,
+        originLongitude: number,
+        destinationLatitude: number,
+        destinationLongitude: number,
+        status: TripStatus,
+    ): Promise<Trip> {
         const driver = await this.driverRepository.findById(driverId);
         const passenger = await this.passengerRepository.findById(passengerId);
 
         if (!driver) {
             throw new NotFoundException('Driver not found.');
+        }
+
+        if (!driver.available) {
+            throw new BadRequestException(
+                'The driver is not available to make the trip.',
+            );
         }
 
         if (!passenger) {
@@ -35,7 +57,11 @@ export class TripService implements TripCaseUse {
             const trip = await this.tripRepository.save({
                 driver,
                 passenger,
-                ...location,
+                originLatitude,
+                originLongitude,
+                destinationLatitude,
+                destinationLongitude,
+                status,
             });
 
             return trip;
@@ -45,13 +71,19 @@ export class TripService implements TripCaseUse {
     }
 
     public async complete(id: string): Promise<Trip> {
+        if (!id) {
+            throw new NotFoundException(
+                'You must provide ID to complete the trip.',
+            );
+        }
+
         const trip = await this.tripRepository.findById(id);
 
         if (!trip) {
             throw new NotFoundException('Trip not found.');
         }
 
-        if (trip.status === TripStatus.COMPLETED) {
+        if (trip.status && trip.status === TripStatus.COMPLETED) {
             return trip;
         }
 
@@ -59,7 +91,25 @@ export class TripService implements TripCaseUse {
 
         try {
             const tripCompleted = await this.tripRepository.save(trip);
-            return tripCompleted;
+            const invoice = await this.invoiceRepository.save({
+                trip: tripCompleted,
+                totalAmount: 120,
+                paymentMethod: PaymentMethod.CASH,
+                paymentStatus: PaymentStatus.PAID,
+                issuedAt: new Date(),
+            });
+
+            return Object.assign(tripCompleted, {
+                invoice: {
+                    id: invoice.id,
+                    totalAmount: invoice.totalAmount,
+                    paymentMethod: invoice.paymentMethod,
+                    paymentStatus: invoice.paymentStatus,
+                    issuedAt: invoice.issuedAt,
+                    createdAt: invoice.createdAt,
+                    updatedAt: invoice.updatedAt,
+                },
+            });
         } catch (error) {
             throw error;
         }

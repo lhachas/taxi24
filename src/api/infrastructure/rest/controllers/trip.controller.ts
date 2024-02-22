@@ -7,14 +7,16 @@ import {
     Post,
     Put,
 } from '@nestjs/common';
-import { Trip } from '../../domain/models/trip.model';
-import { TripCaseUse } from '../../application/case-uses/trip.caseuse';
-import { TripDto } from '../dtos/trip.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { Trip } from '../../../domain/models/trip.model';
+import { TripCaseUse } from '../../../application/case-uses/trip.caseuse';
+import { TripDto } from './dtos/trip.dto';
 
+@ApiTags('Trips')
 @Controller('trips')
 export class TripController {
     constructor(
-        @Inject('TRIP_CASE_USE')
+        @Inject(TripCaseUse)
         private readonly tripCaseUse: TripCaseUse,
     ) {}
 
@@ -30,6 +32,14 @@ export class TripController {
 
     @Post()
     public create(@Body() trip: TripDto): Promise<Trip> {
-        return this.tripCaseUse.create(trip);
+        return this.tripCaseUse.create(
+            trip.driverId,
+            trip.passengerId,
+            trip.originLatitude,
+            trip.originLongitude,
+            trip.destinationLatitude,
+            trip.destinationLongitude,
+            trip.status,
+        );
     }
 }

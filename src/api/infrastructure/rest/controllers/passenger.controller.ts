@@ -1,12 +1,14 @@
 import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
-import { PassengerCaseUse } from '../../application/case-uses/passenger.caseuse';
-import { Passenger } from '../../domain/models/passenger.model';
-import { PassengerDto } from '../dtos/passenger.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { PassengerCaseUse } from '../../../application/case-uses/passenger.caseuse';
+import { Passenger } from '../../../domain/models/passenger.model';
+import { PassengerDto } from './dtos/passenger.dto';
 
+@ApiTags('Passengers')
 @Controller('passengers')
 export class PassengerController {
     constructor(
-        @Inject('PASSENGER_CASE_USE')
+        @Inject(PassengerCaseUse)
         private readonly passengerCaseUse: PassengerCaseUse,
     ) {}
 

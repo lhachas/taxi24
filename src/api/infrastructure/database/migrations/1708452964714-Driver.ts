@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { faker } from '@faker-js/faker/locale/es';
+import * as driversData from '../data/drivers.json';
 
 export class Driver1708452964714 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
@@ -73,21 +73,26 @@ export class Driver1708452964714 implements MigrationInterface {
             true,
         );
 
-        for (let i = 0; i <= 200; i++) {
+        for (const driver of driversData) {
+            if (!driver) {
+                continue;
+            }
+
             await queryRunner.query(
-                `INSERT INTO "drivers"("id", "full_name", "email", "phone_number", "licence_plate", "latitude", "longitude", "available", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, DEFAULT, DEFAULT);`,
+                'INSERT INTO "drivers"("id", "full_name", "email", "phone_number", "licence_plate", "latitude", "longitude", "available", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, DEFAULT, DEFAULT);',
                 [
-                    faker.string.uuid(),
-                    faker.person.fullName(),
-                    faker.internet.email(),
-                    faker.phone.number(),
-                    faker.vehicle.vrm(),
-                    faker.location.latitude(),
-                    faker.location.longitude(),
-                    faker.datatype.boolean(),
+                    driver.id,
+                    driver.fullName,
+                    driver.email,
+                    driver.phoneNumber,
+                    driver.licencePlate,
+                    driver.latitude,
+                    driver.longitude,
+                    driver.available,
                 ],
             );
-            console.log('Driver registered successfully:', faker.string.uuid());
+
+            console.log('Driver registered successfully:', driver.id);
         }
     }
 

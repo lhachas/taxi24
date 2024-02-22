@@ -1,15 +1,15 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
+    PrimaryGeneratedColumn,
     UpdateDateColumn,
     OneToMany,
 } from 'typeorm';
-import { Trip } from './trip.entity';
+import { TripEntity } from './trip.entity';
 
-@Entity({ name: 'passengers' })
-export class Passenger {
+@Entity({ name: 'drivers' })
+export class DriverEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -37,6 +37,37 @@ export class Passenger {
     })
     phoneNumber: string;
 
+    @Column({
+        nullable: false,
+        name: 'licence_plate',
+        type: 'varchar',
+        length: 50,
+    })
+    licensePlate: string;
+
+    @Column({
+        nullable: false,
+        type: 'numeric',
+        precision: 19,
+        scale: 15,
+    })
+    latitude: number;
+
+    @Column({
+        nullable: false,
+        type: 'numeric',
+        precision: 19,
+        scale: 15,
+    })
+    longitude: number;
+
+    @Column({
+        nullable: false,
+        default: true,
+        type: 'boolean',
+    })
+    available: boolean;
+
     @CreateDateColumn({
         name: 'created_at',
     })
@@ -47,6 +78,6 @@ export class Passenger {
     })
     updatedAt?: Date;
 
-    @OneToMany(() => Trip, (trip) => trip.passenger)
-    trips: Trip[];
+    @OneToMany(() => TripEntity, (trip) => trip.driver)
+    trips: TripEntity[];
 }

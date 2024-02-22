@@ -7,20 +7,20 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { Trip } from './trip.entity';
-import { PaymentStatus } from '../../../common/enums/payment-status.enum';
-import { PaymentMethod } from '../../../common/enums/payment-method.enum';
+import { TripEntity } from './trip.entity';
+import { PaymentStatus } from '../../../../shared/enums/payment-status.enum';
+import { PaymentMethod } from '../../../../shared/enums/payment-method.enum';
 
 @Entity({ name: 'invoices' })
-export class Invoice {
+export class InvoiceEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
-    @OneToOne(() => Trip)
+    @OneToOne(() => TripEntity, (trip) => trip.invoice)
     @JoinColumn({
         name: 'trip_id',
     })
-    trip: Trip;
+    trip: TripEntity;
 
     @Column({
         nullable: false,
@@ -49,7 +49,7 @@ export class Invoice {
         name: 'issued_at',
         type: 'date',
     })
-    issued_at: Date;
+    issuedAt: Date;
 
     @CreateDateColumn({
         name: 'created_at',

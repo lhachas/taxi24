@@ -7,15 +7,17 @@ import {
     Post,
     Query,
 } from '@nestjs/common';
-import { DriverDto } from '../dtos/driver.dto';
-import { LocationDto } from '../../../common/dtos/location.dto';
-import { DriverCaseUse } from '../../application/case-uses/driver.caseuse';
-import { Driver } from '../../domain/models/driver.model';
+import { ApiTags } from '@nestjs/swagger';
+import { DriverDto } from './dtos/driver.dto';
+import { LocationDto } from './dtos/location.dto';
+import { DriverCaseUse } from '../../../application/case-uses/driver.caseuse';
+import { Driver } from '../../../domain/models/driver.model';
 
+@ApiTags('Drivers')
 @Controller('drivers')
 export class DriverController {
     constructor(
-        @Inject('DRIVER_CASE_USE')
+        @Inject(DriverCaseUse)
         private readonly driverCaseUse: DriverCaseUse,
     ) {}
 
