@@ -45,7 +45,7 @@ DB_HOST=localhost #De preferencia no modificar
 DB_PORT=5432 #De preferencia no modificar
 DB_USERNAME=test_user
 DB_PASSWORD=test_psw
-DB_DATABASE==taxi24_db
+DB_DATABASE=taxi24_db
 
 # Distance radius to search for drivers en KM
 DRIVER_RADIUS_DISTANCE=3
