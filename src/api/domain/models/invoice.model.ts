@@ -5,7 +5,7 @@ import { Trip } from './trip.model';
 
 export class Invoice {
     @ApiProperty() id?: string;
-    @ApiProperty() trip: Trip;
+    @ApiProperty({ type: () => Trip }) trip: Trip;
     @ApiProperty() totalAmount: number;
     @ApiProperty() paymentMethod: PaymentMethod;
     @ApiProperty() paymentStatus: PaymentStatus;

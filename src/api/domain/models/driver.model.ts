@@ -12,5 +12,5 @@ export abstract class Driver {
     @ApiProperty() available: boolean;
     @ApiProperty() createdAt?: Date;
     @ApiProperty() updatedAt?: Date;
-    @ApiProperty() trips?: Trip[];
+    trips?: Trip[];
 }

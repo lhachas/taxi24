@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Driver } from './driver.model';
 import { Passenger } from './passenger.model';
 import { Invoice } from './invoice.model';
@@ -8,15 +9,15 @@ enum TripStatus {
 }
 
 export class Trip {
-    id?: string;
-    driver: Driver;
-    passenger: Passenger;
-    originLatitude: number;
-    originLongitude: number;
-    destinationLatitude: number;
-    destinationLongitude: number;
-    status: TripStatus;
-    createdAt?: Date;
-    updatedAt?: Date;
-    invoice?: Invoice;
+    @ApiProperty() id?: string;
+    @ApiProperty({ type: () => Driver }) driver: Driver;
+    @ApiProperty({ type: () => Passenger }) passenger: Passenger;
+    @ApiProperty() originLatitude: number;
+    @ApiProperty() originLongitude: number;
+    @ApiProperty() destinationLatitude: number;
+    @ApiProperty() destinationLongitude: number;
+    @ApiProperty() status: TripStatus;
+    @ApiProperty() createdAt?: Date;
+    @ApiProperty() updatedAt?: Date;
+    @ApiProperty() invoice?: Invoice;
 }

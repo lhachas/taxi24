@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     IsDefined,
     IsLatitude,
@@ -9,10 +10,12 @@ export class LocationDto {
     @IsLatitude()
     @IsDefined()
     @IsNotEmpty()
+    @ApiProperty()
     latitude: number;
 
     @IsLongitude()
     @IsDefined()
     @IsNotEmpty()
+    @ApiProperty()
     longitude: number;
 }

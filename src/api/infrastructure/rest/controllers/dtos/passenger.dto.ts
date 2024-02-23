@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     IsDate,
     IsDefined,
@@ -13,28 +14,34 @@ export class PassengerDto {
     @IsString()
     @IsDefined()
     @IsNotEmpty()
+    @ApiProperty()
     id: string;
 
     @IsString()
     @IsDefined()
     @IsNotEmpty()
+    @ApiProperty()
     fullName: string;
 
     @IsEmail()
     @IsDefined()
     @IsNotEmpty()
+    @ApiProperty()
     email: string;
 
     @IsString()
     @IsDefined()
     @IsNotEmpty()
+    @ApiProperty()
     phoneNumber: string;
 
     @IsOptional()
     @IsDate()
+    @ApiProperty()
     createdAt?: Date;
 
     @IsOptional()
     @IsDate()
+    @ApiProperty()
     updatedAt?: Date;
 }

@@ -1,4 +1,3 @@
-
 # Taxi 24
 
 Este README describe cómo clonar, configurar, ejecutar y probar el proyecto Taxi24. El proyecto está desarrollado con las siguientes tecnologías:
@@ -27,8 +26,8 @@ Antes de comenzar, asegúrese de tener al menos esos componentes en su estación
 
 Comience clonando este repositorio en su estación de trabajo
 
-``` sh
-git clone https://github.com/lhachas/taxi24
+```sh
+git clone https://github.com/lhachas/taxi24.git
 ```
 
 #### 1.2.2 Configurar variables de entorno
@@ -44,26 +43,34 @@ API_PORT=3000
 # Database
 DB_HOST=localhost #De preferencia no modificar
 DB_PORT=5432 #De preferencia no modificar
-DB_USERNAME=
-DB_PASSWORD=
-DB_DATABASE=
+DB_USERNAME=test_user
+DB_PASSWORD=test_psw
+DB_DATABASE==taxi24_db
 
 # Distance radius to search for drivers en KM
 DRIVER_RADIUS_DISTANCE=3
 ```
 
+> [!Nota]
+> Para ejecutar el servicio, se sugiere emplear las mismas configuraciones predefinidas del archivo `.env.example` No es necesario realizar ajustes adicionales.
+
 #### 1.2.3 Ejecución
 
-Ahora esta listo para iniciar con **Docker Compose** usando el siguiente comando.
+Una vez que hayas configurado adecuadamente el archivo `.env` como se indicó anteriormente, puedes iniciar el servicio con `Docker Compose` utilizando el siguiente comando:
 
 ```sh
-cd ./taxi24
 docker-compose up
 ```
 
-> [!NOTE]
-> Ahora puede dirigirse <http://localhost:3000/api/docs> y ver sus documentos API Swagger.
-> [!IMPORTANT]
+Este comando desencadena una serie de acciones importantes internamente:
+
+- **Creación de Contenedores:** Docker Compose crea y levanta los contenedores para la aplicación y la base de datos según lo especificado en el archivo docker-compose.yml.
+
+- **Ejecución de Migraciones:** Una vez que los contenedores están en funcionamiento, la aplicación ejecuta automáticamente las migraciones de base de datos, asegurando que la estructura de la base de datos esté al día.
+
+- **Carga de Datos Iniciales:** Además de las migraciones, se cargan automáticamente los datos iniciales necesarios para el funcionamiento adecuado de la aplicación. Esto puede incluir datos de prueba o semilla para garantizar una experiencia consistente durante el desarrollo y las pruebas.
+
+> [!Nota]
 > Para acceder al servicio <http://localhost:3000/api/>
 
 ## 2. Estructura de carpetas
@@ -93,29 +100,39 @@ src/
 └── app.module.ts           # Módulo principal de la aplicación
 ```
 
-## 3. Ejecución de funcionalidades
+## 3. Modelo de base de datos
+
+<p align="center">
+  <img src="db_diagram.png" alt="Diagrama de base de datos">
+</p>
+
+## 4. Ejecución de funcionalidades
 
 Esta sección presenta los comandos curl para ejecutar todas las funcionalidades del API, con una cobertura total del 100% de los requisitos del proyecto. Estos comandos son universales, es decir, pueden ser utilizados en cualquier cliente HTTP, no solo en curl
 
-**Documentación:**
+### Documentación
 
 Para facilitar la comprensión e integración del API, se ha desarrollado una documentación completa con Swagger. Esta documentación se encuentra disponible dentro del proyecto y ofrece una descripción detallada de cada endpoint, incluyendo sus parámetros, respuestas y ejemplos de uso.
 
-**Datos Iniciales:**
+```url
+http://localhost:3000/api/docs
+```
+
+### Datos Iniciales
 
 Para facilitar las pruebas y el desarrollo, la base de datos ya cuenta con datos precargados para `conductores` y `pasajeros`. Estos datos son esenciales para probar la funcionalidad de `viajes`.
 
-**Facturación Automática:**
+### Facturación Automática
 
 Se ha implementado la generación automática de una factura cada vez que se completa un viaje. El resultado de la factura se puede visualizar en el campo `invoice` del JSON de respuesta, proporcionando una mayor transparencia y control.
 
-**Consideraciones Importantes:**
+### Consideraciones Importantes
 
 Se han tomado en cuenta y aplicado los consejos y sugerencias proporcionados durante el desarrollo del servicio, con el objetivo de optimizar la experiencia del usuario y la calidad del API.
 
-### 3.1 Conductores
+### 4.1 Conductores
 
-#### 3.1.1 Obtener una lista de todos los Conductores
+#### 4.1.1 Obtener una lista de todos los Conductores
 
 ```sh
 curl -X GET \
@@ -152,7 +169,7 @@ curl -X GET \
 ]
 ```
 
-#### 3.1.2 Obtener una lista de todos los Conductores disponibles
+#### 4.1.2 Obtener una lista de todos los Conductores disponibles
 
 ```sh
 curl -X GET \
@@ -162,34 +179,34 @@ curl -X GET \
 ```json
 [
     {
-  "id": "3a593700-fed9-4434-9b45-289c3b7efd8d",
-  "fullName": "Matilde Heredia Casares",
-  "email": "Lorenzo98@hotmail.com",
-  "phoneNumber": "992.593.851",
-  "licensePlate": "PU43VWH",
-  "latitude": "-16.414054109198110",
-  "longitude": "-71.574215480330250",
-  "available": true,
-  "createdAt": "2024-02-22T20:56:23.862Z",
-  "updatedAt": "2024-02-22T20:56:23.862Z"
- },
- {
-  "id": "1465c856-8870-459e-97a3-319fdaee1fd4",
-  "fullName": "Josep Aragón Cadena",
-  "email": "Alejandro.PalomoBaca@gmail.com",
-  "phoneNumber": "929 253 321",
-  "licensePlate": "UU14YIX",
-  "latitude": "-16.397497802548802",
-  "longitude": "-71.580077026988420",
-  "available": true,
-  "createdAt": "2024-02-22T20:56:23.862Z",
-  "updatedAt": "2024-02-22T20:56:23.862Z"
- },
+        "id": "3a593700-fed9-4434-9b45-289c3b7efd8d",
+        "fullName": "Matilde Heredia Casares",
+        "email": "Lorenzo98@hotmail.com",
+        "phoneNumber": "992.593.851",
+        "licensePlate": "PU43VWH",
+        "latitude": "-16.414054109198110",
+        "longitude": "-71.574215480330250",
+        "available": true,
+        "createdAt": "2024-02-22T20:56:23.862Z",
+        "updatedAt": "2024-02-22T20:56:23.862Z"
+    },
+    {
+        "id": "1465c856-8870-459e-97a3-319fdaee1fd4",
+        "fullName": "Josep Aragón Cadena",
+        "email": "Alejandro.PalomoBaca@gmail.com",
+        "phoneNumber": "929 253 321",
+        "licensePlate": "UU14YIX",
+        "latitude": "-16.397497802548802",
+        "longitude": "-71.580077026988420",
+        "available": true,
+        "createdAt": "2024-02-22T20:56:23.862Z",
+        "updatedAt": "2024-02-22T20:56:23.862Z"
+    },
     # ... (otros conductores)
 ]
 ```
 
-#### 3.1.3 Obtener una lista de todos los Conductores disponibles en un radio de 3KM para una ubicación específica
+#### 4.1.3 Obtener una lista de todos los Conductores disponibles en un radio de 3KM para una ubicación específica
 
 ```sh
 curl -X GET \
@@ -201,23 +218,22 @@ curl -X GET \
 
 ```json
 [
- {
-  "id": "4cb97968-06fc-4606-a139-2ebaf4368148",
-  "fullName": "Laura Rascón Pizarro",
-  "email": "Rafael43@yahoo.com",
-  "phoneNumber": "906725817",
-  "licensePlate": "CX03FGE",
-  "latitude": "-16.335529330010430",
-  "longitude": "-71.555653915912760",
-  "available": true,
-  "createdAt": "2024-02-22T17:31:19.134Z",
-  "updatedAt": "2024-02-22T17:31:19.134Z"
- }
+    {
+        "id": "4cb97968-06fc-4606-a139-2ebaf4368148",
+        "fullName": "Laura Rascón Pizarro",
+        "email": "Rafael43@yahoo.com",
+        "phoneNumber": "906725817",
+        "licensePlate": "CX03FGE",
+        "latitude": "-16.335529330010430",
+        "longitude": "-71.555653915912760",
+        "available": true,
+        "createdAt": "2024-02-22T17:31:19.134Z",
+        "updatedAt": "2024-02-22T17:31:19.134Z"
+    }
 ]
-
 ```
 
-#### 3.1.4 Para un pasajero solicitando un viaje, Obtenga una lista de los 3 conductores más cercanos al punto de partida
+#### 4.1.4 Para un pasajero solicitando un viaje, Obtenga una lista de los 3 conductores más cercanos al punto de partida
 
 ```sh
 curl -X GET \
@@ -229,46 +245,46 @@ curl -X GET \
 
 ```json
 [
- {
-  "id": "4cb97968-06fc-4606-a139-2ebaf4368148",
-  "fullName": "Laura Rascón Pizarro",
-  "email": "Rafael43@yahoo.com",
-  "phoneNumber": "906725817",
-  "licensePlate": "CX03FGE",
-  "latitude": "-16.335529330010430",
-  "longitude": "-71.555653915912760",
-  "available": true,
-  "createdAt": "2024-02-22T17:31:19.134Z",
-  "updatedAt": "2024-02-22T17:31:19.134Z"
- },
- {
-  "id": "2bc2e877-604c-4274-8249-dd31bfa77639",
-  "fullName": "Andrea Caraballo Maya",
-  "email": "Antonia93@hotmail.com",
-  "phoneNumber": "973.458.079",
-  "licensePlate": "UW25HQG",
-  "latitude": "-16.346466372556712",
-  "longitude": "-71.552506048263010",
-  "available": false,
-  "createdAt": "2024-02-22T17:31:19.134Z",
-  "updatedAt": "2024-02-22T17:31:19.134Z"
- },
- {
-  "id": "aee458e6-c2bf-417b-a696-5a1e19dbd9a2",
-  "fullName": "Laura Ibarra Fajardo",
-  "email": "Sonia.VieraMota42@hotmail.com",
-  "phoneNumber": "954 095 019",
-  "licensePlate": "XC45TQE",
-  "latitude": "-16.325425042156564",
-  "longitude": "-71.581922328714130",
-  "available": true,
-  "createdAt": "2024-02-22T17:31:19.134Z",
-  "updatedAt": "2024-02-22T17:31:19.134Z"
- }
+    {
+        "id": "4cb97968-06fc-4606-a139-2ebaf4368148",
+        "fullName": "Laura Rascón Pizarro",
+        "email": "Rafael43@yahoo.com",
+        "phoneNumber": "906725817",
+        "licensePlate": "CX03FGE",
+        "latitude": "-16.335529330010430",
+        "longitude": "-71.555653915912760",
+        "available": true,
+        "createdAt": "2024-02-22T17:31:19.134Z",
+        "updatedAt": "2024-02-22T17:31:19.134Z"
+    },
+    {
+        "id": "2bc2e877-604c-4274-8249-dd31bfa77639",
+        "fullName": "Andrea Caraballo Maya",
+        "email": "Antonia93@hotmail.com",
+        "phoneNumber": "973.458.079",
+        "licensePlate": "UW25HQG",
+        "latitude": "-16.346466372556712",
+        "longitude": "-71.552506048263010",
+        "available": false,
+        "createdAt": "2024-02-22T17:31:19.134Z",
+        "updatedAt": "2024-02-22T17:31:19.134Z"
+    },
+    {
+        "id": "aee458e6-c2bf-417b-a696-5a1e19dbd9a2",
+        "fullName": "Laura Ibarra Fajardo",
+        "email": "Sonia.VieraMota42@hotmail.com",
+        "phoneNumber": "954 095 019",
+        "licensePlate": "XC45TQE",
+        "latitude": "-16.325425042156564",
+        "longitude": "-71.581922328714130",
+        "available": true,
+        "createdAt": "2024-02-22T17:31:19.134Z",
+        "updatedAt": "2024-02-22T17:31:19.134Z"
+    }
 ]
 ```
 
-#### 3.1.5 Obtener un conductor específico por ID
+#### 4.1.5 Obtener un conductor específico por ID
 
 ```sh
 curl -X GET \
@@ -277,22 +293,22 @@ curl -X GET \
 
 ```json
 {
- "id": "39776418-96be-4cf1-88f4-d7d34b6aaff8",
- "fullName": "Jennifer Arreola Angulo",
- "email": "Isabel63@gmail.com",
- "phoneNumber": "909186105",
- "licensePlate": "OC73QXT",
- "latitude": "-16.388021546929643",
- "longitude": "-71.572044537123530",
- "available": false,
- "createdAt": "2024-02-22T20:56:23.862Z",
- "updatedAt": "2024-02-22T20:56:23.862Z"
+    "id": "39776418-96be-4cf1-88f4-d7d34b6aaff8",
+    "fullName": "Jennifer Arreola Angulo",
+    "email": "Isabel63@gmail.com",
+    "phoneNumber": "909186105",
+    "licensePlate": "OC73QXT",
+    "latitude": "-16.388021546929643",
+    "longitude": "-71.572044537123530",
+    "available": false,
+    "createdAt": "2024-02-22T20:56:23.862Z",
+    "updatedAt": "2024-02-22T20:56:23.862Z"
 }
 ```
 
-### 3.2 Pasajeros
+### 4.2 Pasajeros
 
-#### 3.2.1 Obtener una lista de todos los pasajeros
+#### 4.2.1 Obtener una lista de todos los pasajeros
 
 ```sh
 curl -X GET \
@@ -302,26 +318,26 @@ curl -X GET \
 ```json
 [
     {
-  "id": "ae707f47-b4b1-4874-bc52-30574632b731",
-  "fullName": "Laura Benavídez Bueno",
-  "email": "Agustin_PantojaDelatorre@yahoo.com",
-  "phoneNumber": "952678208",
-  "createdAt": "2024-02-22T20:56:23.862Z",
-  "updatedAt": "2024-02-22T20:56:23.862Z"
- },
- {
-  "id": "09ed5cec-eccd-4843-9c94-16f7e8297613",
-  "fullName": "Juan Ramón Nava Delrío",
-  "email": "Monica.LozanoCardenas11@hotmail.com",
-  "phoneNumber": "990468148",
-  "createdAt": "2024-02-22T20:56:23.862Z",
-  "updatedAt": "2024-02-22T20:56:23.862Z"
- },
+        "id": "ae707f47-b4b1-4874-bc52-30574632b731",
+        "fullName": "Laura Benavídez Bueno",
+        "email": "Agustin_PantojaDelatorre@yahoo.com",
+        "phoneNumber": "952678208",
+        "createdAt": "2024-02-22T20:56:23.862Z",
+        "updatedAt": "2024-02-22T20:56:23.862Z"
+    },
+    {
+        "id": "09ed5cec-eccd-4843-9c94-16f7e8297613",
+        "fullName": "Juan Ramón Nava Delrío",
+        "email": "Monica.LozanoCardenas11@hotmail.com",
+        "phoneNumber": "990468148",
+        "createdAt": "2024-02-22T20:56:23.862Z",
+        "updatedAt": "2024-02-22T20:56:23.862Z"
+    },
     # ... (otros conductores)
 ]
 ```
 
-#### 3.2.2 Obtener un pasajero especifico por su ID
+#### 4.2.2 Obtener un pasajero especifico por su ID
 
 ```sh
 curl -X GET \
@@ -330,18 +346,18 @@ curl -X GET \
 
 ```json
 {
- "id": "ae707f47-b4b1-4874-bc52-30574632b731",
- "fullName": "Laura Benavídez Bueno",
- "email": "Agustin_PantojaDelatorre@yahoo.com",
- "phoneNumber": "952678208",
- "createdAt": "2024-02-22T20:56:23.862Z",
- "updatedAt": "2024-02-22T20:56:23.862Z"
+    "id": "ae707f47-b4b1-4874-bc52-30574632b731",
+    "fullName": "Laura Benavídez Bueno",
+    "email": "Agustin_PantojaDelatorre@yahoo.com",
+    "phoneNumber": "952678208",
+    "createdAt": "2024-02-22T20:56:23.862Z",
+    "updatedAt": "2024-02-22T20:56:23.862Z"
 }
 ```
 
-### 3.3 Viajes
+### 4.3 Viajes
 
-#### 3.3.1 Crear una nueva solicitud de "Viaje" asignando un conductor a un pasajero
+#### 4.3.1 Crear una nueva solicitud de "Viaje" asignando un conductor a un pasajero
 
 ```sh
 curl -X POST \
@@ -391,7 +407,7 @@ curl -X POST \
 }
 ```
 
-#### 3.3.2 Obtener una lista de todos los viajes activos
+#### 4.3.2 Obtener una lista de todos los viajes activos
 
 ```sh
 curl -X GET \
@@ -400,41 +416,41 @@ curl -X GET \
 
 ```json
 [
- {
-  "id": "37cca3d5-647c-46d0-817d-802d99c6f9cd",
-  "originLatitude": "-16.357923569913446",
-  "originLongitude": "-71.564446235900010",
-  "destinationLatitude": "-16.425194981496580",
-  "destinationLongitude": "-71.517445315474400",
-  "status": "in_progress",
-  "createdAt": "2024-02-22T22:32:45.117Z",
-  "updatedAt": "2024-02-22T22:32:45.117Z",
-  "driver": {
-   "id": "3a593700-fed9-4434-9b45-289c3b7efd8d",
-   "fullName": "Matilde Heredia Casares",
-   "email": "Lorenzo98@hotmail.com",
-   "phoneNumber": "992.593.851",
-   "licensePlate": "PU43VWH",
-   "latitude": "-16.414054109198110",
-   "longitude": "-71.574215480330250",
-   "available": true,
-   "createdAt": "2024-02-22T20:56:23.862Z",
-   "updatedAt": "2024-02-22T20:56:23.862Z"
-  },
-  "passenger": {
-   "id": "ae707f47-b4b1-4874-bc52-30574632b731",
-   "fullName": "Laura Benavídez Bueno",
-   "email": "Agustin_PantojaDelatorre@yahoo.com",
-   "phoneNumber": "952678208",
-   "createdAt": "2024-02-22T20:56:23.862Z",
-   "updatedAt": "2024-02-22T20:56:23.862Z"
-  },
-  "invoice": null
- }
+    {
+        "id": "37cca3d5-647c-46d0-817d-802d99c6f9cd",
+        "originLatitude": "-16.357923569913446",
+        "originLongitude": "-71.564446235900010",
+        "destinationLatitude": "-16.425194981496580",
+        "destinationLongitude": "-71.517445315474400",
+        "status": "in_progress",
+        "createdAt": "2024-02-22T22:32:45.117Z",
+        "updatedAt": "2024-02-22T22:32:45.117Z",
+        "driver": {
+            "id": "3a593700-fed9-4434-9b45-289c3b7efd8d",
+            "fullName": "Matilde Heredia Casares",
+            "email": "Lorenzo98@hotmail.com",
+            "phoneNumber": "992.593.851",
+            "licensePlate": "PU43VWH",
+            "latitude": "-16.414054109198110",
+            "longitude": "-71.574215480330250",
+            "available": true,
+            "createdAt": "2024-02-22T20:56:23.862Z",
+            "updatedAt": "2024-02-22T20:56:23.862Z"
+        },
+        "passenger": {
+            "id": "ae707f47-b4b1-4874-bc52-30574632b731",
+            "fullName": "Laura Benavídez Bueno",
+            "email": "Agustin_PantojaDelatorre@yahoo.com",
+            "phoneNumber": "952678208",
+            "createdAt": "2024-02-22T20:56:23.862Z",
+            "updatedAt": "2024-02-22T20:56:23.862Z"
+        },
+        "invoice": null
+    }
 ]
 ```
 
-#### 3.3.3 Completar un viaje
+#### 4.3.3 Completar un viaje
 
 ```sh
 curl -X PUT \

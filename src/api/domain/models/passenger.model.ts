@@ -8,5 +8,5 @@ export abstract class Passenger {
     @ApiProperty() phoneNumber: string;
     @ApiProperty() createdAt?: Date;
     @ApiProperty() updatedAt?: Date;
-    @ApiProperty() trips?: Trip[];
+    trips?: Trip[];
 }
