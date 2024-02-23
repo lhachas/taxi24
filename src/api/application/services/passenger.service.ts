@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    ConflictException,
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { PassengerRepository } from '../../domain/repositories/passenger.repository';
 import { Passenger } from '../../domain/models/passenger.model';
 import { PassengerCaseUse } from '../case-uses/passenger.caseuse';
@@ -41,6 +46,14 @@ export class PassengerService implements PassengerCaseUse {
 
     public async create(payload: Passenger): Promise<Passenger> {
         try {
+            const existsPassenger = await this.passengerRepository.findByEmail(
+                payload.email,
+            );
+
+            if (existsPassenger) {
+                throw new ConflictException('Email is already in use.');
+            }
+
             const passenger = await this.passengerRepository.save(payload);
             return passenger;
         } catch (error) {

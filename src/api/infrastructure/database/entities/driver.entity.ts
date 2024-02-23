@@ -2,7 +2,6 @@ import {
     Entity,
     Column,
     CreateDateColumn,
-    PrimaryGeneratedColumn,
     UpdateDateColumn,
     OneToMany,
 } from 'typeorm';
@@ -10,7 +9,12 @@ import { TripEntity } from './trip.entity';
 
 @Entity({ name: 'drivers' })
 export class DriverEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @Column({
+        nullable: false,
+        primary: true,
+        type: 'varchar',
+        length: 255,
+    })
     id: string;
 
     @Column({

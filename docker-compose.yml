@@ -10,9 +10,9 @@ services:
           - '9090'
         environment:
             - PGDATA=/var/pgdata
-            - POSTGRES_USER=leooh
-            - POSTGRES_PASSWORD=leooh@control
-            - POSTGRES_DB=taxi24_db
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_DB=${DB_DATABASE}
         volumes:
             - 'pgdata:/var/pgdata'
     api:

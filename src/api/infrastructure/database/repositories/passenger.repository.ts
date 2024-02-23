@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { plainToClass } from 'class-transformer';
+import { v4 as uuid } from 'uuid';
 import { PassengerEntity } from '../entities/passenger.entity';
 import { PassengerRepository } from '../../../domain/repositories/passenger.repository';
 import { Passenger } from '../../../domain/models/passenger.model';
@@ -21,9 +22,16 @@ export class PassengerDBRepository implements PassengerRepository {
         return this.passengerRepository.findOneBy({ id });
     }
 
+    public findByEmail(email: string): Promise<Passenger> {
+        return this.passengerRepository.findOneBy({ email });
+    }
+
     public save(passenger: Passenger): Promise<Passenger> {
         return this.passengerRepository.save(
-            plainToClass(PassengerEntity, passenger),
+            plainToClass(PassengerEntity, {
+                id: uuid(),
+                ...passenger,
+            }),
         );
     }
 }

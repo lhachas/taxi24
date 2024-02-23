@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    ConflictException,
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { LocationUtil } from '../../../shared/utils/location.util';
 import { DriverRepository } from '../../domain/repositories/driver.repository';
@@ -86,6 +91,14 @@ export class DriverService implements DriverCaseUse {
 
     public async create(payload: Driver): Promise<Driver> {
         try {
+            const existingDriver = await this.driverRepository.findByEmail(
+                payload.email,
+            );
+
+            if (existingDriver) {
+                throw new ConflictException('Email is already in use.');
+            }
+
             const driver = await this.driverRepository.save(payload);
             return driver;
         } catch (error) {

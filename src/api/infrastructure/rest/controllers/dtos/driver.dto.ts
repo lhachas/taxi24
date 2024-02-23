@@ -1,26 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
     IsBoolean,
-    IsDate,
     IsDefined,
     IsEmail,
     IsLatitude,
     IsLongitude,
     IsNotEmpty,
-    IsOptional,
     IsPhoneNumber,
     IsString,
-    IsUUID,
 } from 'class-validator';
 
 export class DriverDto {
-    @IsString()
-    @IsUUID()
-    @IsNotEmpty()
-    @IsDefined()
-    @ApiProperty()
-    id: string;
-
     @IsString()
     @IsNotEmpty()
     @IsDefined()

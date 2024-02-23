@@ -179,7 +179,7 @@ curl -X GET \
 ```json
 [
     {
-        "id": "3a593700-fed9-4434-9b45-289c3b7efd8d",
+        "id": "714ed6f2-0a40-403d-937f-dc946bfcb035",
         "fullName": "Matilde Heredia Casares",
         "email": "Lorenzo98@hotmail.com",
         "phoneNumber": "992.593.851",
@@ -191,7 +191,7 @@ curl -X GET \
         "updatedAt": "2024-02-22T20:56:23.862Z"
     },
     {
-        "id": "1465c856-8870-459e-97a3-319fdaee1fd4",
+        "id": "59bb3c7d-e438-40a1-bd31-a12d508cf511",
         "fullName": "Josep Aragón Cadena",
         "email": "Alejandro.PalomoBaca@gmail.com",
         "phoneNumber": "929 253 321",
@@ -288,12 +288,12 @@ curl -X GET \
 
 ```sh
 curl -X GET \
-  http://localhost:3000/api/drivers/39776418-96be-4cf1-88f4-d7d34b6aaff8
+  http://localhost:3000/api/drivers/60397e16-a8f3-4714-90dc-af26bb9b0d25
 ```
 
 ```json
 {
-    "id": "39776418-96be-4cf1-88f4-d7d34b6aaff8",
+    "id": "60397e16-a8f3-4714-90dc-af26bb9b0d25",
     "fullName": "Jennifer Arreola Angulo",
     "email": "Isabel63@gmail.com",
     "phoneNumber": "909186105",
@@ -318,7 +318,7 @@ curl -X GET \
 ```json
 [
     {
-        "id": "ae707f47-b4b1-4874-bc52-30574632b731",
+        "id": "51d0776f-2d94-4c7f-8335-ddf2035ca68d",
         "fullName": "Laura Benavídez Bueno",
         "email": "Agustin_PantojaDelatorre@yahoo.com",
         "phoneNumber": "952678208",
@@ -326,7 +326,7 @@ curl -X GET \
         "updatedAt": "2024-02-22T20:56:23.862Z"
     },
     {
-        "id": "09ed5cec-eccd-4843-9c94-16f7e8297613",
+        "id": "ec880a6b-0321-4148-88f0-a3e9df79d3d5",
         "fullName": "Juan Ramón Nava Delrío",
         "email": "Monica.LozanoCardenas11@hotmail.com",
         "phoneNumber": "990468148",
@@ -341,12 +341,12 @@ curl -X GET \
 
 ```sh
 curl -X GET \
-  http://localhost:3000/api/passengers/ae707f47-b4b1-4874-bc52-30574632b731
+  http://localhost:3000/api/passengers/51d0776f-2d94-4c7f-8335-ddf2035ca68d
 ```
 
 ```json
 {
-    "id": "ae707f47-b4b1-4874-bc52-30574632b731",
+    "id": "51d0776f-2d94-4c7f-8335-ddf2035ca68d",
     "fullName": "Laura Benavídez Bueno",
     "email": "Agustin_PantojaDelatorre@yahoo.com",
     "phoneNumber": "952678208",
@@ -359,13 +359,17 @@ curl -X GET \
 
 #### 4.3.1 Crear una nueva solicitud de "Viaje" asignando un conductor a un pasajero
 
+Para iniciar una solicitud de viaje y asignar un conductor a un pasajero, se requieren los IDs correspondientes del conductor y del pasajero. Estos IDs deben estar disponibles previamente, ya que se crean al inicio del servicio.
+
+Para obtener los IDs necesarios, utilice los endpoints previamente definidos para listar los conductores y pasajeros. A partir de esta información, puede extraer los IDs requeridos para completar esta funcionalidad.
+
 ```sh
 curl -X POST \
   http://localhost:3000/api/trips \
   -H "Content-Type: application/json" \
   -d '{
-    "driverId": "3a593700-fed9-4434-9b45-289c3b7efd8d",
-    "passengerId": "ae707f47-b4b1-4874-bc52-30574632b731",
+    "driverId": "714ed6f2-0a40-403d-937f-dc946bfcb035",
+    "passengerId": "51d0776f-2d94-4c7f-8335-ddf2035ca68d",
     "originLatitude": -16.357923569913446,
     "originLongitude": -71.56444623590001,
     "destinationLatitude": -16.42519498149658,
@@ -377,7 +381,7 @@ curl -X POST \
 ```json
 {
     "driver": {
-        "id": "3a593700-fed9-4434-9b45-289c3b7efd8d",
+        "id": "714ed6f2-0a40-403d-937f-dc946bfcb035",
         "fullName": "Matilde Heredia Casares",
         "email": "Lorenzo98@hotmail.com",
         "phoneNumber": "992.593.851",
@@ -389,7 +393,7 @@ curl -X POST \
         "updatedAt": "2024-02-22T20:56:23.862Z"
     },
     "passenger": {
-        "id": "ae707f47-b4b1-4874-bc52-30574632b731",
+        "id": "51d0776f-2d94-4c7f-8335-ddf2035ca68d",
         "fullName": "Laura Benavídez Bueno",
         "email": "Agustin_PantojaDelatorre@yahoo.com",
         "phoneNumber": "952678208",
@@ -452,6 +456,10 @@ curl -X GET \
 
 #### 4.3.3 Completar un viaje
 
+Para completar un viaje, debe utilizar el ID del viaje creado previamente.
+
+Una vez completado el viaje, se generará automáticamente una factura internamente. Puede verificar la creación de la factura observando el campo **"invoice"** en el JSON resultante.
+
 ```sh
 curl -X PUT \
   http://localhost:3000/api/trips/37cca3d5-647c-46d0-817d-802d99c6f9cd
@@ -468,7 +476,7 @@ curl -X PUT \
     "createdAt": "2024-02-22T22:32:45.117Z",
     "updatedAt": "2024-02-22T22:37:59.388Z",
     "driver": {
-        "id": "3a593700-fed9-4434-9b45-289c3b7efd8d",
+        "id": "714ed6f2-0a40-403d-937f-dc946bfcb035",
         "fullName": "Matilde Heredia Casares",
         "email": "Lorenzo98@hotmail.com",
         "phoneNumber": "992.593.851",
@@ -480,7 +488,7 @@ curl -X PUT \
         "updatedAt": "2024-02-22T20:56:23.862Z"
     },
     "passenger": {
-        "id": "ae707f47-b4b1-4874-bc52-30574632b731",
+        "id": "51d0776f-2d94-4c7f-8335-ddf2035ca68d",
         "fullName": "Laura Benavídez Bueno",
         "email": "Agustin_PantojaDelatorre@yahoo.com",
         "phoneNumber": "952678208",

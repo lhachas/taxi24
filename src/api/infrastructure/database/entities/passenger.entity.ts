@@ -1,6 +1,5 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
     UpdateDateColumn,
@@ -10,7 +9,12 @@ import { TripEntity } from './trip.entity';
 
 @Entity({ name: 'passengers' })
 export class PassengerEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @Column({
+        nullable: false,
+        primary: true,
+        type: 'varchar',
+        length: 255,
+    })
     id: string;
 
     @Column({

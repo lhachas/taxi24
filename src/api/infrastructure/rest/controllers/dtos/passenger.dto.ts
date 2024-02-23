@@ -6,17 +6,9 @@ import {
     IsNotEmpty,
     IsOptional,
     IsString,
-    IsUUID,
 } from 'class-validator';
 
 export class PassengerDto {
-    @IsUUID()
-    @IsString()
-    @IsDefined()
-    @IsNotEmpty()
-    @ApiProperty()
-    id: string;
-
     @IsString()
     @IsDefined()
     @IsNotEmpty()

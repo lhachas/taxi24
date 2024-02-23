@@ -1,9 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { plainToClass } from 'class-transformer';
+import { v4 as uuid } from 'uuid';
 import { InvoiceEntity } from '../entities/invoice.entity';
 import { InvoiceRepository } from '../../../domain/repositories/invoice.repository';
 import { Invoice } from '../../../domain/models/invoice.model';
-import { plainToClass } from 'class-transformer';
 
 export class InvoiceDBRepository implements InvoiceRepository {
     constructor(
@@ -35,7 +36,10 @@ export class InvoiceDBRepository implements InvoiceRepository {
 
     public save(invoice: Invoice): Promise<Invoice> {
         return this.invoiceRepository.save(
-            plainToClass(InvoiceEntity, invoice),
+            plainToClass(InvoiceEntity, {
+                id: uuid(),
+                ...invoice,
+            }),
         );
     }
 }

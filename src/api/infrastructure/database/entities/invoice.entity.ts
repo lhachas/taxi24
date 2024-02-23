@@ -1,6 +1,5 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
     OneToOne,
     JoinColumn,
@@ -13,7 +12,12 @@ import { PaymentMethod } from '../../../../shared/enums/payment-method.enum';
 
 @Entity({ name: 'invoices' })
 export class InvoiceEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @Column({
+        nullable: false,
+        primary: true,
+        type: 'varchar',
+        length: 255,
+    })
     id: string;
 
     @OneToOne(() => TripEntity, (trip) => trip.invoice)

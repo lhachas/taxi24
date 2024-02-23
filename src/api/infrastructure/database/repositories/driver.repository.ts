@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { plainToClass } from 'class-transformer';
+import { v4 as uuid } from 'uuid';
 import { DriverEntity } from '../entities/driver.entity';
 import { Driver } from '../../../domain/models/driver.model';
 import { DriverRepository } from '../../../domain/repositories/driver.repository';
@@ -20,6 +21,10 @@ export class DriverDBRepository implements DriverRepository {
 
     public findById(id: string): Promise<Driver> {
         return this.driverRepository.findOneBy({ id });
+    }
+
+    public findByEmail(email: string): Promise<Driver> {
+        return this.driverRepository.findOneBy({ email });
     }
 
     public findAvailables(): Promise<Driver[]> {
@@ -43,6 +48,11 @@ export class DriverDBRepository implements DriverRepository {
     }
 
     public save(driver: Driver): Promise<Driver> {
-        return this.driverRepository.save(plainToClass(DriverEntity, driver));
+        return this.driverRepository.save(
+            plainToClass(DriverEntity, {
+                id: uuid(),
+                ...driver,
+            }),
+        );
     }
 }

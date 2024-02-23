@@ -1,6 +1,5 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
     ManyToOne,
     JoinColumn,
@@ -15,7 +14,12 @@ import { TripStatus } from '../../../../shared/enums/trip-status.enum';
 
 @Entity({ name: 'trips' })
 export class TripEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @Column({
+        nullable: false,
+        primary: true,
+        type: 'varchar',
+        length: 255,
+    })
     id: string;
 
     @ManyToOne(() => DriverEntity, (driver) => driver.trips)
