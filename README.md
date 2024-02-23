@@ -103,7 +103,7 @@ src/
 ## 3. Modelo de base de datos
 
 <p align="center">
-  <img src="db_diagram.png" alt="Diagrama de base de datos">
+  <img src="./db_diagram.png" alt="Diagrama de base de datos">
 </p>
 
 ## 4. Ejecución de funcionalidades
