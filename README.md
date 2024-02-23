@@ -219,16 +219,28 @@ curl -X GET \
 ```json
 [
     {
-        "id": "4cb97968-06fc-4606-a139-2ebaf4368148",
-        "fullName": "Laura Rascón Pizarro",
-        "email": "Rafael43@yahoo.com",
-        "phoneNumber": "906725817",
-        "licensePlate": "CX03FGE",
-        "latitude": "-16.335529330010430",
-        "longitude": "-71.555653915912760",
+        "id": "964b9b9d-914a-4d64-b474-7cabf21479d2",
+        "fullName": "Hermenegildo Almonte Ayala",
+        "email": "Adan_IbarraSerna@hotmail.com",
+        "phoneNumber": "907-273-396",
+        "licensePlate": "RR45POR",
+        "latitude": "-16.311336665667520",
+        "longitude": "-71.532496198608110",
         "available": true,
-        "createdAt": "2024-02-22T17:31:19.134Z",
-        "updatedAt": "2024-02-22T17:31:19.134Z"
+        "createdAt": "2024-02-23T04:31:32.962Z",
+        "updatedAt": "2024-02-23T04:31:32.962Z"
+    },
+    {
+        "id": "b0ee796a-6270-4388-935f-d75b4591aad1",
+        "fullName": "Sra. Lorena Solorzano Carrión",
+        "email": "Debora26@gmail.com",
+        "phoneNumber": "949 787 754",
+        "licensePlate": "IF87JRO",
+        "latitude": "-16.310131913263263",
+        "longitude": "-71.531906112621950",
+        "available": true,
+        "createdAt": "2024-02-23T04:31:32.962Z",
+        "updatedAt": "2024-02-23T04:31:32.962Z"
     }
 ]
 ```
@@ -254,32 +266,32 @@ curl -X GET \
         "latitude": "-16.335529330010430",
         "longitude": "-71.555653915912760",
         "available": true,
-        "createdAt": "2024-02-22T17:31:19.134Z",
-        "updatedAt": "2024-02-22T17:31:19.134Z"
+        "createdAt": "2024-02-23T04:31:32.962Z",
+        "updatedAt": "2024-02-23T04:31:32.962Z"
     },
     {
-        "id": "2bc2e877-604c-4274-8249-dd31bfa77639",
-        "fullName": "Andrea Caraballo Maya",
-        "email": "Antonia93@hotmail.com",
-        "phoneNumber": "973.458.079",
-        "licensePlate": "UW25HQG",
-        "latitude": "-16.346466372556712",
-        "longitude": "-71.552506048263010",
-        "available": false,
-        "createdAt": "2024-02-22T17:31:19.134Z",
-        "updatedAt": "2024-02-22T17:31:19.134Z"
-    },
-    {
-        "id": "aee458e6-c2bf-417b-a696-5a1e19dbd9a2",
-        "fullName": "Laura Ibarra Fajardo",
-        "email": "Sonia.VieraMota42@hotmail.com",
-        "phoneNumber": "954 095 019",
-        "licensePlate": "XC45TQE",
-        "latitude": "-16.325425042156564",
-        "longitude": "-71.581922328714130",
+        "id": "964b9b9d-914a-4d64-b474-7cabf21479d2",
+        "fullName": "Hermenegildo Almonte Ayala",
+        "email": "Adan_IbarraSerna@hotmail.com",
+        "phoneNumber": "907-273-396",
+        "licensePlate": "RR45POR",
+        "latitude": "-16.311336665667520",
+        "longitude": "-71.532496198608110",
         "available": true,
-        "createdAt": "2024-02-22T17:31:19.134Z",
-        "updatedAt": "2024-02-22T17:31:19.134Z"
+        "createdAt": "2024-02-23T04:31:32.962Z",
+        "updatedAt": "2024-02-23T04:31:32.962Z"
+    },
+    {
+        "id": "b0ee796a-6270-4388-935f-d75b4591aad1",
+        "fullName": "Sra. Lorena Solorzano Carrión",
+        "email": "Debora26@gmail.com",
+        "phoneNumber": "949 787 754",
+        "licensePlate": "IF87JRO",
+        "latitude": "-16.310131913263263",
+        "longitude": "-71.531906112621950",
+        "available": true,
+        "createdAt": "2024-02-23T04:31:32.962Z",
+        "updatedAt": "2024-02-23T04:31:32.962Z"
     }
 ]
 ```
